@@ -1,0 +1,6 @@
+/* CSS for user image */
+.user-image {
+    max-width: 100px; /* Adjust the desired width */
+    max-height: 100px; /* Adjust the desired height */
+    border-radius: 50%; /* Optional: Rounded image shape */
+}

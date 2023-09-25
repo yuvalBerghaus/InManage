@@ -94,7 +94,15 @@ JOIN posts ON users.id = posts.userId;
 
 */
 
-
+function GetPosts($db) {
+    $result = $db->JoinOneToMany("users", "posts", "id", "userId", "*");
+    
+    if ($result && is_array($result)) {
+        return $result;
+    } else {
+        return []; // Return an empty array or handle the error as needed
+    }
+}
 
 
 ?>
