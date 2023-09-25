@@ -2,11 +2,16 @@
 // Function to insert data into the database
 function InsertPostsIntoDatabase($db, $tb_name, $data) {
     foreach ($data as $post) {
-        // Add a boolean field (true by default)
-        $post['active'] = true;
-
-        // Insert the post data into the database
-        $db->Insert($tb_name, $post);
+        // Prepare data for insertion
+        $postData = array(
+            'userId' => $post['userId'],
+            'title' => $post['title'],
+            'body' => $post['body'],
+            'active' => true
+        );
+        
+        // Insert the user into the 'users' table
+        $db->Insert('posts', $postData);
     }
 }
 
@@ -79,6 +84,17 @@ function SaveImageFromURL($imageUrl) {
         die('Failed to save the image.');
     }
 }
+
+
+/* 
+
+SELECT *
+FROM users
+JOIN posts ON users.id = posts.userId;
+
+*/
+
+
 
 
 ?>
