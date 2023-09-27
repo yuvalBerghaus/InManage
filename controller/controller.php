@@ -1,37 +1,41 @@
 <?php
-// Function to insert data into the database
-function InsertPostsIntoDatabase($db, $tb_name, $data) {
-    foreach ($data as $post) {
-        // Prepare data for insertion
-        $postData = array(
-            'userId' => $post['userId'],
-            'title' => $post['title'],
-            'body' => $post['body'],
-            'active' => true
-        );
-        
-        // Insert the user into the 'users' table
-        $db->Insert('posts', $postData);
+require_once './models/enums.php';
+
+
+function InsertDataIntoDatabase($data, $table) {
+    // $data originates from the API instance
+    // ENUMS originates from the database fields
+    $db = DataBase::getInstance();
+    foreach ($data as $item) {
+        // Determine the table name and data based on the insertType parameter
+        if ($table === UsersFields::TABLE_NAME) {
+            $tableName = UsersFields::TABLE_NAME;
+            $insertData = array(
+                UsersFields::USERNAME => $item['username'],
+                UsersFields::EMAIL => $item['email'],
+                UsersFields::ACTIVE => true
+            );
+        } elseif ($table === PostsFields::TABLE_NAME) {
+            $tableName = PostsFields::TABLE_NAME;
+            $insertData = array(
+                PostsFields::USERID => $item['userId'],
+                PostsFields::TITLE => $item['title'],
+                PostsFields::BODY => $item['body'],
+                PostsFields::ACTIVE => true
+            );
+        } else {
+            // Handle invalid insertType
+            echo "Invalid insertType specified.";
+            return;
+        }
+
+        // Insert the data into the specified table
+        $db->Insert($tableName, $insertData);
     }
 }
 
-// Function to insert users into the DB *corresponding* to the fields DB~JSONPlaceholder
-function InsertUsersIntoDatabase($db, $data) {
-    foreach ($data as $user) {
-        // Prepare data for insertion
-        $userData = array(
-            'username' => $user['username'],
-            'email' => $user['email'],
-            'active' => true
-        );
-        
-        // Insert the user into the 'users' table
-        $db->Insert('users', $userData);
-    }
-}
 
 
-// Function to fetch data from the API
 function GetDataFromAPI($apiUrl) {
     $curl = curl_init();
 
@@ -94,15 +98,48 @@ JOIN posts ON users.id = posts.userId;
 
 */
 
-function GetPosts($db) {
-    $result = $db->JoinOneToMany("users", "posts", "id", "userId", "*");
-    
+function GetPosts() {
+    $db = DataBase::getInstance();
+    $result = $db->JoinOneToMany(UsersFields::TABLE_NAME, PostsFields::TABLE_NAME, UsersFields::ID, PostsFields::USERID, "*");
     if ($result && is_array($result)) {
         return $result;
     } else {
         return []; // Return an empty array or handle the error as needed
     }
 }
+
+
+function DisplayPosts() {
+    $result = GetPosts();
+    if (count($result) > 0) {
+        foreach ($result as $row) {
+            $username = $row[UsersFields::USERNAME];
+            $postTitle = $row[PostsFields::TITLE];
+            $postContent = $row[PostsFields::BODY];
+            $createdAt = $row[PostsFields::CREATED_AT];
+            
+            // Retrieve and display user image
+            $userImage = 'images/65118075a1396.jpg'; // Update with the correct image path
+            
+            // Generate HTML for a post with improved styling
+            echo '<div class="post">';
+            echo '<div class="post-header">';
+            echo '<img class="user-image" src="' . $userImage . '" alt="User Image">';
+            echo '<div class="post-info">';
+            echo '<span class="username">' . $username . '</span>';
+            echo '<span class="timestamp">Posted on: ' . $createdAt . '</span>';
+            echo '</div>';
+            echo '</div>';
+            echo '<h2 class="post-title">' . $postTitle . '</h2>';
+            echo '<p class="post-content">' . $postContent . '</p>';
+            echo '</div>';
+        }
+    } else {
+        echo 'No posts found.';
+    }
+}
+
+
 
 
 ?>

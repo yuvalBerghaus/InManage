@@ -8,9 +8,10 @@ class DataBase {
     private $conn;
 
     // Public method to get or create the singleton instance
-    public static function getInstance($host, $username, $password, $database) {
+    public static function getInstance() {
         if (!self::$instance) {
-            self::$instance = new self($host, $username, $password, $database);
+            // Configure db here!
+            self::$instance = new self('localhost', 'root', '', 'inmanage');
         }
         return self::$instance;
     }
@@ -58,7 +59,6 @@ class DataBase {
         $query = "SELECT $columns
                   FROM $table_1
                   JOIN $table_2 ON $table_1.$key = $table_2.$foreign_key";
-    
         $result = $this->conn->query($query);
     
         if (!$result) {
@@ -111,5 +111,7 @@ class DataBase {
         $this->conn->close();
     }
 }
+
+
 
 ?>
