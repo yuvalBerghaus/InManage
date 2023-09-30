@@ -1,6 +1,6 @@
 <?php
 require './controller/controller.php';
 
-Task_3();
+Task_7();
 
 ?>

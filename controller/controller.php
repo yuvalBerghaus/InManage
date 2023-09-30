@@ -63,6 +63,16 @@ ORDER BY
     date,
     hour
 ON DUPLICATE KEY UPDATE post_count = VALUES(post_count);
+
+
+SELECT *
+FROM users
+JOIN posts ON users.id = posts.userId
+WHERE MONTH(users.birth_date) = MONTH(CURRENT_DATE())
+ORDER BY DAY(posts.created_at) DESC
+LIMIT 1;
+
+
 */
 
 

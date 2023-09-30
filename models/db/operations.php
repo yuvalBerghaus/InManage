@@ -66,6 +66,7 @@ class DataBaseOperations {
     }
 
     public static function GetLatestUserPostOfMonth() {
+        $db = DataBase::GetInstance();
         $table = "users";
         $columns = "*";
         $condition = "MONTH(" . UsersFields::BIRTH_DATE . ") = MONTH(CURRENT_DATE())";
@@ -73,7 +74,7 @@ class DataBaseOperations {
         $orderBy = "DESC";
         $limit = 1;
     
-        $result = $this->Select($table, $columns, $condition, $orderByField, $orderBy, $limit);
+        $result = $db->Select($table, $columns, $condition, $orderByField, $orderBy, $limit);
     
         // Check if any results were returned
         if (count($result) > 0) {
@@ -84,6 +85,7 @@ class DataBaseOperations {
             return null;
         }
     }
+    
     public static function InitAI() {
         $db = DataBase::GetInstance();
         return $db->InitAI('users');
