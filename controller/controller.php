@@ -13,6 +13,18 @@ require_once './models/db/operations.php';
  * Task_2 Used the jsonPlaceHolder for my database
 */
 
+
+
+/**
+ * Task_3 Function
+ * Performs the following tasks:
+ * 1. Creates Users and Posts tables.
+ * 2. Initializes auto-increment for the Users table.
+ * 3. Fetches data from the specified API endpoints.
+ * 4. Inserts fetched data into the Users and Posts tables.
+ *
+ * @return void
+ */
 function Task_3() {
     DBOperations::CreateTable(UsersFields::TABLE_NAME);
     DBOperations::CreateTable(PostsFields::TABLE_NAME);
