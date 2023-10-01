@@ -3,7 +3,7 @@ require './controller/controller.php';
 
 
 /*
-Run tasks in Chronological order.
+Run Step in Chronological order.
 After running each task comment it back.
 */
 
