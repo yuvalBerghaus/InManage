@@ -9,7 +9,7 @@ class View {
         <head>
             <meta charset="UTF-8">
             <title>Your Page Title</title>
-            <link rel="stylesheet" type="text/css" href="styles.css">
+            <link rel="stylesheet" type="text/css" href="./css/styles.css">
         </head>
         <body>
             <div class="posts">';

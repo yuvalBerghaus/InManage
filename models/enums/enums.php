@@ -23,6 +23,7 @@ class PostsFields {
     const USERID = 'userId';
 }
 
+// Enum that represents the posts_per_hour table in our db
 class PostsPerHourFields {
     const ID = 'id';
     const TABLE_NAME = 'posts_per_hour';
@@ -31,6 +32,7 @@ class PostsPerHourFields {
     const POSTS_PER_HOUR = 'post_count';
 }
 
+// Enum that represents the type of views rather list_view (looping over posts) or just fetching one post LIST_VIEW
 class DisplayMethodTypes {
     const LAST_POST = 'lastPost';
     const LIST_VIEW = 'listView';

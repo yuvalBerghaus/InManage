@@ -29,6 +29,7 @@ function Task_3() {
     // Step 1: Create Users and Posts tables.
     DBOperations::CreateTable(UsersFields::TABLE_NAME);
     DBOperations::CreateTable(PostsFields::TABLE_NAME);
+
     // Step 2: Initialize auto-increment for the Users table.
     if(DBOperations::InitAI()) {
         // Step 3: Fetch data from API endpoints
@@ -51,26 +52,26 @@ function Task_3() {
  *
  * @return void
  */
-function Task_4() {
+function SaveImageFromURLTask() {
     ImageHandler::SaveImageFromURL('https://cdn2.vectorstock.com/i/1000x1000/23/81/default-avatar-profile-icon-vector-18942381.jpg');
 }
 
 /**
  * Displays a list of posts using View class and data from DBOperations::GetPosts().
  */
-function Task_5() {
+function DisplayPostsTask() {
     View::DisplayPosts(DisplayMethodTypes::LIST_VIEW, DBOperations::GetPosts());
 }
 
 /**
  * Displays the latest user post of the month that was born in the current month using View class and data from DBOperations::GetLatestUserPostOfMonth().
  */
-function Task_6() {
+function DisplayLatestPostTask() {
     View::DisplayPosts(DisplayMethodTypes::LAST_POST, DBOperations::GetLatestUserPostOfMonth());
 }
 
 
-function Task_7() {
+function CreateTablePostsPerHourTask() {
     DBOperations::CreateTable(PostsPerHourFields::TABLE_NAME);
     echo "Table PostsPerHour created successfully!";
 }
