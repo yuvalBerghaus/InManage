@@ -56,3 +56,6 @@ Before using this application, ensure you have the following in place:
    - Run Task_5 in order to display all the posts of the users
    - Run Task_6 in order to display the last post of the user that was born in the current month
    - Run Task_7 in order to create table posts_per_hour
+  
+  
+![inmanage](https://github.com/yuvalBerghaus/IM/assets/65304080/3449335e-74da-4c5e-b10b-4c5f32e2c58d)
