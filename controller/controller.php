@@ -14,8 +14,8 @@ require_once './models/db/operations.php';
 */
 
 function Task_3() {
-    DBOperations::CreateTableUsers();
-    DBOperations::CreateTablePosts();
+    DBOperations::CreateTable(UsersFields::TABLE_NAME);
+    DBOperations::CreateTable(PostsFields::TABLE_NAME);
     if(DBOperations::InitAI()) {
         $users = ApiHandler::GetDataFromAPI('https://jsonplaceholder.typicode.com/users');
         $posts = ApiHandler::GetDataFromAPI('https://jsonplaceholder.typicode.com/posts');
@@ -40,7 +40,7 @@ function Task_6() {
 }
 
 function Task_7() {
-    DBOperations::CreateTablePostsPerHour();
+    DBOperations::CreateTable(PostsPerHourFields::TABLE_NAME);
     echo "Table PostsPerHour created successfully!";
 }
 

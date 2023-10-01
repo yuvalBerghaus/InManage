@@ -41,7 +41,11 @@ class DBOperations {
                         PostsFields::BODY => $item['body'],
                         PostsFields::ACTIVE => true
                     );
-                } else {
+                } 
+                else if($table === PostsPerHourFields::TABLE_NAME) {
+                    
+                }
+                else {
                      // Handle invalid table_name by throwing an exception
                      throw new Exception("Invalid table_name specified.");
                 }
@@ -93,32 +97,73 @@ class DBOperations {
         $db->Create(PostsPerHourFields::TABLE_NAME, $columns, $query);
     }
 
-    public static function CreateTableUsers() {
-        // CREATE TABLE
-        $db = DataBase::GetInstance();
-        $columns = [
-            UsersFields::ID . ' INT AUTO_INCREMENT PRIMARY KEY',
-            UsersFields::EMAIL . ' VARCHAR(100) NOT NULL',
-            UsersFields::ACTIVE . ' tinyint(1) NOT NULL',
-            UsersFields::USERNAME . ' VARCHAR(64) NOT NULL',
-            UsersFields::BIRTH_DATE . ' DATE NOT NULL DEFAULT CURRENT_TIMESTAMP()',
-        ];
-        return $db->Create(UsersFields::TABLE_NAME, $columns, null);
-    }
+    // public static function CreateTableUsers() {
+    //     // CREATE TABLE
+    //     $db = DataBase::GetInstance();
+    //     $columns = [
+    //         UsersFields::ID . ' INT AUTO_INCREMENT PRIMARY KEY',
+    //         UsersFields::EMAIL . ' VARCHAR(100) NOT NULL',
+    //         UsersFields::ACTIVE . ' tinyint(1) NOT NULL',
+    //         UsersFields::USERNAME . ' VARCHAR(64) NOT NULL',
+    //         UsersFields::BIRTH_DATE . ' DATE NOT NULL DEFAULT CURRENT_TIMESTAMP()',
+    //     ];
+    //     return $db->Create(UsersFields::TABLE_NAME, $columns, null);
+    // }
 
-    public static function CreateTablePosts() {
-        // CREATE TABLE
+    public static function CreateTable($tableName) {
         $db = DataBase::GetInstance();
-        $columns = [
-            PostsFields::ID . ' INT NOT NULL AUTO_INCREMENT PRIMARY KEY',
-            PostsFields::ACTIVE . ' tinyint(1) NOT NULL',
-            PostsFields::USERID . ' int(11) NOT NULL',
-            PostsFields::TITLE . ' varchar(50) NOT NULL',
-            PostsFields::BODY . ' varchar(220) NOT NULL',
-            PostsFields::CREATED_AT . ' datetime NOT NULL DEFAULT current_timestamp()'
-        ];
-        return $db->Create(PostsFields::TABLE_NAME, $columns, null);
+        $columns = null;
+        $query = null;
+        try {
+            if($tableName === PostsFields::TABLE_NAME) {
+                $columns = [
+                    PostsFields::ID . ' INT NOT NULL AUTO_INCREMENT PRIMARY KEY',
+                    PostsFields::ACTIVE . ' tinyint(1) NOT NULL',
+                    PostsFields::USERID . ' int(11) NOT NULL',
+                    PostsFields::TITLE . ' varchar(50) NOT NULL',
+                    PostsFields::BODY . ' varchar(220) NOT NULL',
+                    PostsFields::CREATED_AT . ' datetime NOT NULL DEFAULT current_timestamp()'
+                ];
+            }
+            else if($tableName == UsersFields::TABLE_NAME) {
+                $columns = [
+                    UsersFields::ID . ' INT AUTO_INCREMENT PRIMARY KEY',
+                    UsersFields::EMAIL . ' VARCHAR(100) NOT NULL',
+                    UsersFields::ACTIVE . ' tinyint(1) NOT NULL',
+                    UsersFields::USERNAME . ' VARCHAR(64) NOT NULL',
+                    UsersFields::BIRTH_DATE . ' DATE NOT NULL DEFAULT CURRENT_TIMESTAMP()',
+                ];
+            }
+            else if($tableName === PostsPerHourFields::TABLE_NAME) {
+                $columns = [
+                    PostsPerHourFields::ID . ' INT AUTO_INCREMENT PRIMARY KEY',
+                    PostsPerHourFields::DATE . ' DATE',
+                    PostsPerHourFields::HOUR . ' INT',
+                    PostsPerHourFields::POSTS_PER_HOUR . ' INT'
+                ];
+                $query = "UNIQUE KEY unique_date_hour (" . PostsPerHourFields::DATE . ", " . PostsPerHourFields::HOUR . ")";
+
+            }
+            else {
+                throw new Exception("Table name does not correspond to the task!");
+            }
+            $db->Create($tableName, $columns, $query);
+        }
+        catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
     }
+    // public static function CreateTablePosts() {
+    //     $columns = [
+    //         PostsFields::ID . ' INT NOT NULL AUTO_INCREMENT PRIMARY KEY',
+    //         PostsFields::ACTIVE . ' tinyint(1) NOT NULL',
+    //         PostsFields::USERID . ' int(11) NOT NULL',
+    //         PostsFields::TITLE . ' varchar(50) NOT NULL',
+    //         PostsFields::BODY . ' varchar(220) NOT NULL',
+    //         PostsFields::CREATED_AT . ' datetime NOT NULL DEFAULT current_timestamp()'
+    //     ];
+    //     return $db->Create(PostsFields::TABLE_NAME, $columns, null);
+    // }
 
 
     /**
