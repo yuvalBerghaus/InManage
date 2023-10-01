@@ -14,13 +14,13 @@ require_once './models/db/operations.php';
 */
 
 function Task_3() {
-    DataBaseOperations::CreateTableUsers();
-    DataBaseOperations::CreateTablePosts();
-    if(DataBaseOperations::InitAI()) {
+    DBOperations::CreateTableUsers();
+    DBOperations::CreateTablePosts();
+    if(DBOperations::InitAI()) {
         $users = ApiHandler::GetDataFromAPI('https://jsonplaceholder.typicode.com/users');
         $posts = ApiHandler::GetDataFromAPI('https://jsonplaceholder.typicode.com/posts');
-        DataBaseOperations::InsertDataIntoDatabase($users, UsersFields::TABLE_NAME);
-        DataBaseOperations::InsertDataIntoDatabase($posts, PostsFields::TABLE_NAME);
+        DBOperations::InsertDataIntoDatabase($users, UsersFields::TABLE_NAME);
+        DBOperations::InsertDataIntoDatabase($posts, PostsFields::TABLE_NAME);
         echo "Task 3 Succeeded!";
     }
     else
@@ -32,15 +32,15 @@ function Task_4() {
 }
 
 function Task_5() {
-    View::DisplayPosts(DisplayMethodTypes::LIST_VIEW, DataBaseOperations::GetPosts());
+    View::DisplayPosts(DisplayMethodTypes::LIST_VIEW, DBOperations::GetPosts());
 }
 
 function Task_6() {
-    View::DisplayPosts(DisplayMethodTypes::LAST_POST, DataBaseOperations::GetLatestUserPostOfMonth());
+    View::DisplayPosts(DisplayMethodTypes::LAST_POST, DBOperations::GetLatestUserPostOfMonth());
 }
 
 function Task_7() {
-    DataBaseOperations::CreateTablePostsPerHour();
+    DBOperations::CreateTablePostsPerHour();
     echo "Table PostsPerHour created successfully!";
 }
 

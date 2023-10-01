@@ -3,7 +3,7 @@ require_once './models/enums/enums.php';
 require_once __DIR__ . '/db_manager.php';
 
 
-class DataBaseOperations {
+class DBOperations {
     /**
      * Insert data into a database table.
      *
@@ -103,7 +103,7 @@ class DataBaseOperations {
             UsersFields::USERNAME . ' VARCHAR(64) NOT NULL',
             UsersFields::BIRTH_DATE . ' DATE NOT NULL DEFAULT CURRENT_TIMESTAMP()',
         ];
-        $db->Create(UsersFields::TABLE_NAME, $columns, null);
+        return $db->Create(UsersFields::TABLE_NAME, $columns, null);
     }
 
     public static function CreateTablePosts() {
@@ -117,7 +117,7 @@ class DataBaseOperations {
             PostsFields::BODY . ' varchar(220) NOT NULL',
             PostsFields::CREATED_AT . ' datetime NOT NULL DEFAULT current_timestamp()'
         ];
-        $db->Create(PostsFields::TABLE_NAME, $columns, null);
+        return $db->Create(PostsFields::TABLE_NAME, $columns, null);
     }
 
 
