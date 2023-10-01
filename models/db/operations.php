@@ -4,6 +4,19 @@ require_once __DIR__ . '/db_manager.php';
 
 
 class DataBaseOperations {
+    /**
+     * Insert data into a database table.
+     *
+     * This function inserts data obtained from an API instance into a specified database table.
+     *
+     * @param array $data The data to be inserted, typically originating from the API.
+     * @param string $table The name of the database table to insert data into.
+     *
+     * @throws Exception If an invalid table name is specified, an exception is thrown.
+     *
+     * @return void This function does not return a value.
+     */
+
     public static function InsertDataIntoDatabase($data, $table) {
         // $data originates from the API instance
         // ENUMS originates from the database fields
@@ -41,7 +54,13 @@ class DataBaseOperations {
             echo "Error: " . $e->getMessage();
         }
     }
-
+    /**
+     * Retrieve and return posts data with user information.
+     *
+     * This function performs a database query to retrieve posts data along with associated user information by performing a JOIN operation between the "users" and "posts" tables.
+     *
+     * @return array An array of posts data with associated user information. Returns an empty array if no data is found or an error occurs during execution.
+     */
     public static function GetPosts() {
         $db = DataBase::GetInstance();
         $result = $db->JoinOneToMany(UsersFields::TABLE_NAME, PostsFields::TABLE_NAME, UsersFields::ID, PostsFields::USERID, "*");
@@ -52,6 +71,15 @@ class DataBaseOperations {
         }
     }
 
+    /**
+     * Create a new table to store posts per hour data.
+     *
+     * This function creates a new database table called "posts_per_hour" with specific columns for tracking the number of posts per hour.
+     *
+     * @throws Exception If there is an error during the table creation process, an exception is thrown.
+     *
+     * @return void This function does not return a value.
+     */
     public static function CreateTablePostsPerHour() {
         // CREATE TABLE
         $db = DataBase::GetInstance();
@@ -65,30 +93,46 @@ class DataBaseOperations {
         $db->Create(PostsPerHourFields::TABLE_NAME, $columns, $query);
     }
 
+    /**
+     * Retrieve the latest user post of the current month.
+     *
+     * This function queries the database to retrieve the latest user post of the current month based on the user's birth date and post creation date.
+     *
+     * @return array|null An associative array representing the latest user post of the month, or null if no posts are found or an error occurs during execution.
+     */
     public static function GetLatestUserPostOfMonth() {
         $db = DataBase::GetInstance();
-        $table = "users";
+        $tableUsers = UsersFields::TABLE_NAME;
+        $tablePosts = PostsFields::TABLE_NAME;
         $columns = "*";
-        $condition = "MONTH(" . UsersFields::BIRTH_DATE . ") = MONTH(CURRENT_DATE())";
-        $orderByField = "DAY(" . PostsFields::CREATED_AT . ")";
+        $condition = "MONTH(`" . $tableUsers . "`.`" . UsersFields::BIRTH_DATE . "`) = MONTH(CURRENT_DATE())";
+        $orderByField = "DAY(`" . $tablePosts . "`.`" . PostsFields::CREATED_AT . "`)";
         $orderBy = "DESC";
         $limit = 1;
+        
+        // Specify the join table and condition
+        $joinTable = $tablePosts;
+        $joinCondition = "`" . $tableUsers . "`.`" . UsersFields::ID . "` = `" . $tablePosts . "`.`" . PostsFields::USERID . "`";
     
-        $result = $db->Select($table, $columns, $condition, $orderByField, $orderBy, $limit);
-    
+        $result = $db->Select($tableUsers, $columns, $condition, $orderByField, $orderBy, $limit, $joinTable, $joinCondition);
+        
         // Check if any results were returned
         if (count($result) > 0) {
             // Return the first result as the latest user post of the month
             return $result[0];
         } else {
+            echo "no posts";
             // No posts found
             return null;
         }
     }
     
+    
+    
+
     public static function InitAI() {
         $db = DataBase::GetInstance();
-        return $db->InitAI('users');
+        return $db->InitAI(UsersFields::TABLE_NAME);
     }
     
 
