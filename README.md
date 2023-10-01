@@ -48,7 +48,7 @@ Before using this application, ensure you have the following in place:
    - Navigate to the project directory in your web server's document root.
 
 ## Usage
-1. **In order to run the tasks run in index.php the following functions in a chronological order**
+1. **In order to run the tasks run in index.php the following functions in a chronological order and comment back after done.**
    - Run CreateTablesAndInsertApiTask() in order to create users and posts tables and insert data from jsonPlaceHolder api
    - Run SaveImageFromURLTask() in order to save image from the specified url to the server.
    - Run DisplayPostsTask() in order to display all the posts of the users
