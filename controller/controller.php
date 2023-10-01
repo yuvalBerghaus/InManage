@@ -26,23 +26,25 @@ require_once './models/db/operations.php';
  * @return void
  */
 function CreateTablesAndInsertApiTask() {
-    // Step 1: Create Users and Posts tables.
-    DBOperations::CreateTable(UsersFields::TABLE_NAME);
-    DBOperations::CreateTable(PostsFields::TABLE_NAME);
+    try {
+        // Step 1: Create Users and Posts tables.
+        DBOperations::CreateTable(UsersFields::TABLE_NAME);
+        DBOperations::CreateTable(PostsFields::TABLE_NAME);
 
-    // Step 2: Initialize auto-increment for the Users table.
-    if(DBOperations::InitAI()) {
-        // Step 3: Fetch data from API endpoints
-        $users = ApiHandler::GetDataFromAPI('https://jsonplaceholder.typicode.com/users');
-        $posts = ApiHandler::GetDataFromAPI('https://jsonplaceholder.typicode.com/posts');
-        
-        // Step 4: Insert fetched data into the Users and Posts tables.
-        DBOperations::InsertDataIntoDatabase($users, UsersFields::TABLE_NAME);
-        DBOperations::InsertDataIntoDatabase($posts, PostsFields::TABLE_NAME);
-        echo "Task 3 Succeeded!";
+        // Step 2: Initialize auto-increment for the Users table.
+        if (DBOperations::InitAI(UsersFields::TABLE_NAME)) {
+            // Step 3: Fetch data from API endpoints
+            $users = ApiHandler::GetDataFromAPI('https://jsonplaceholder.typicode.com/users');
+            $posts = ApiHandler::GetDataFromAPI('https://jsonplaceholder.typicode.com/posts');
+
+            // Step 4: Insert fetched data into the Users and Posts tables.
+            DBOperations::InsertDataIntoDatabase($users, UsersFields::TABLE_NAME);
+            DBOperations::InsertDataIntoDatabase($posts, PostsFields::TABLE_NAME);
+            echo "Task 3 Succeeded!";
+        }
+    } catch (Exception $e) {
+        echo "Error in CreateTablesAndInsertApiTask: " . $e->getMessage();
     }
-    else
-        echo "Unable to do task 3";
 }
 
 /**
