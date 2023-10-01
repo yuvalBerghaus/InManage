@@ -49,7 +49,6 @@ Before using this application, ensure you have the following in place:
    - Navigate to the project directory in your web server's document root.
 
 ## Usage
-** In order to run the tasks run Task_3() Task_4() .. Task_7() in index.php in a chronological order
 1. **In order to run the tasks run Task_3() Task_4() .. Task_7() in index.php in a chronological order**
    - Run Task_3 in order to create users and posts tables and insert data from jsonPlaceHolder api
    - Run Task_4 in order to save image from the specified url to the server.
