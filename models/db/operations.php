@@ -1,5 +1,5 @@
 <?php
-require_once './models/enums.php';
+require_once './models/enums/enums.php';
 require_once __DIR__ . '/db_manager.php';
 
 
@@ -92,6 +92,34 @@ class DataBaseOperations {
         $query = "UNIQUE KEY unique_date_hour (" . PostsPerHourFields::DATE . ", " . PostsPerHourFields::HOUR . ")";
         $db->Create(PostsPerHourFields::TABLE_NAME, $columns, $query);
     }
+
+    public static function CreateTableUsers() {
+        // CREATE TABLE
+        $db = DataBase::GetInstance();
+        $columns = [
+            UsersFields::ID . ' INT AUTO_INCREMENT PRIMARY KEY',
+            UsersFields::EMAIL . ' VARCHAR(100) NOT NULL',
+            UsersFields::ACTIVE . ' tinyint(1) NOT NULL',
+            UsersFields::USERNAME . ' VARCHAR(64) NOT NULL',
+            UsersFields::BIRTH_DATE . ' DATE NOT NULL DEFAULT CURRENT_TIMESTAMP()',
+        ];
+        $db->Create(UsersFields::TABLE_NAME, $columns, null);
+    }
+
+    public static function CreateTablePosts() {
+        // CREATE TABLE
+        $db = DataBase::GetInstance();
+        $columns = [
+            PostsFields::ID . ' INT NOT NULL AUTO_INCREMENT PRIMARY KEY',
+            PostsFields::ACTIVE . ' tinyint(1) NOT NULL',
+            PostsFields::USERID . ' int(11) NOT NULL',
+            PostsFields::TITLE . ' varchar(50) NOT NULL',
+            PostsFields::BODY . ' varchar(220) NOT NULL',
+            PostsFields::CREATED_AT . ' datetime NOT NULL DEFAULT current_timestamp()'
+        ];
+        $db->Create(PostsFields::TABLE_NAME, $columns, null);
+    }
+
 
     /**
      * Retrieve the latest user post of the current month.

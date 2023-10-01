@@ -17,18 +17,7 @@ class DataBase {
         }
         return self::$instance;
     }
- /**
- * Private constructor to prevent external instantiation of the database connection.
- *
- * This constructor initializes the properties of the database connection object,
- * creates a database connection using the provided credentials, and handles any
- * connection errors.
- *
- * @param string $host The hostname or IP address of the database server.
- * @param string $username The username for the database connection.
- * @param string $password The password for the database connection.
- * @param string $database The name of the database to connect to.
- */   
+    
     // Private constructor to prevent external instantiation
     private function __construct($host, $username, $password, $database) {
         $this->host = $host;
@@ -59,7 +48,12 @@ class DataBase {
  */
     public function Create($table_name, $columns, $query) {
         $columns = is_array($columns) ? implode(", ", $columns) : $columns;
-        $query = "CREATE TABLE $table_name($columns, $query)";
+        if($query != null) {
+            $query = "CREATE TABLE $table_name($columns, $query)";
+        }
+        else {
+            $query = "CREATE TABLE $table_name($columns)";
+        }
         $result = $this->conn->query($query);
         if (!$result) {
             throw new Exception("Error executing query: " . $this->conn->error);

@@ -14,6 +14,8 @@ require_once './models/db/operations.php';
 */
 
 function Task_3() {
+    DataBaseOperations::CreateTableUsers();
+    DataBaseOperations::CreateTablePosts();
     if(DataBaseOperations::InitAI()) {
         $users = ApiHandler::GetDataFromAPI('https://jsonplaceholder.typicode.com/users');
         $posts = ApiHandler::GetDataFromAPI('https://jsonplaceholder.typicode.com/posts');
@@ -30,15 +32,16 @@ function Task_4() {
 }
 
 function Task_5() {
-    View::DisplayPosts('listView', DataBaseOperations::GetPosts());
+    View::DisplayPosts(DisplayMethodTypes::LIST_VIEW, DataBaseOperations::GetPosts());
 }
 
 function Task_6() {
-    View::DisplayPosts('last_post', DataBaseOperations::GetLatestUserPostOfMonth());
+    View::DisplayPosts(DisplayMethodTypes::LAST_POST, DataBaseOperations::GetLatestUserPostOfMonth());
 }
 
 function Task_7() {
     DataBaseOperations::CreateTablePostsPerHour();
+    echo "Table PostsPerHour created successfully!";
 }
 
 ?>
