@@ -25,7 +25,7 @@ require_once './models/db/operations.php';
  *
  * @return void
  */
-function Task_3() {
+function CreateTablesAndInsertApiTask() {
     // Step 1: Create Users and Posts tables.
     DBOperations::CreateTable(UsersFields::TABLE_NAME);
     DBOperations::CreateTable(PostsFields::TABLE_NAME);
