@@ -42,7 +42,6 @@ Before using this application, ensure you have the following in place:
 3. Initialize the database:
    - Ensure your MySQL database is set up with the correct configuration.
    - Run the tasks in index.php
-     ```
 
 4. Start the application:
    - Launch a web server (e.g., Apache) and ensure PHP is enabled.
