@@ -26,11 +26,16 @@ require_once './models/db/operations.php';
  * @return void
  */
 function Task_3() {
+    // Step 1: Create Users and Posts tables.
     DBOperations::CreateTable(UsersFields::TABLE_NAME);
     DBOperations::CreateTable(PostsFields::TABLE_NAME);
+    // Step 2: Initialize auto-increment for the Users table.
     if(DBOperations::InitAI()) {
+        // Step 3: Fetch data from API endpoints
         $users = ApiHandler::GetDataFromAPI('https://jsonplaceholder.typicode.com/users');
         $posts = ApiHandler::GetDataFromAPI('https://jsonplaceholder.typicode.com/posts');
+        
+        // Step 4: Insert fetched data into the Users and Posts tables.
         DBOperations::InsertDataIntoDatabase($users, UsersFields::TABLE_NAME);
         DBOperations::InsertDataIntoDatabase($posts, PostsFields::TABLE_NAME);
         echo "Task 3 Succeeded!";
@@ -39,17 +44,31 @@ function Task_3() {
         echo "Unable to do task 3";
 }
 
+/**
+ * Task_4 Function
+ * Performs the following task:
+ * Downloads and saves an image from a specified URL using ImageHandler.
+ *
+ * @return void
+ */
 function Task_4() {
     ImageHandler::SaveImageFromURL('https://cdn2.vectorstock.com/i/1000x1000/23/81/default-avatar-profile-icon-vector-18942381.jpg');
 }
 
+/**
+ * Displays a list of posts using View class and data from DBOperations::GetPosts().
+ */
 function Task_5() {
     View::DisplayPosts(DisplayMethodTypes::LIST_VIEW, DBOperations::GetPosts());
 }
 
+/**
+ * Displays the latest user post of the month that was born in the current month using View class and data from DBOperations::GetLatestUserPostOfMonth().
+ */
 function Task_6() {
     View::DisplayPosts(DisplayMethodTypes::LAST_POST, DBOperations::GetLatestUserPostOfMonth());
 }
+
 
 function Task_7() {
     DBOperations::CreateTable(PostsPerHourFields::TABLE_NAME);
