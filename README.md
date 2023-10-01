@@ -48,12 +48,12 @@ Before using this application, ensure you have the following in place:
    - Navigate to the project directory in your web server's document root.
 
 ## Usage
-1. **In order to run the tasks run Task_3() Task_4() .. Task_7() in index.php in a chronological order**
-   - Run Task_3 in order to create users and posts tables and insert data from jsonPlaceHolder api
-   - Run Task_4 in order to save image from the specified url to the server.
-   - Run Task_5 in order to display all the posts of the users
-   - Run Task_6 in order to display the last post of the user that was born in the current month
-   - Run Task_7 in order to create table posts_per_hour
+1. **In order to run the tasks run in index.php the following functions in a chronological order**
+   - Run CreateTablesAndInsertApiTask() in order to create users and posts tables and insert data from jsonPlaceHolder api
+   - Run SaveImageFromURLTask() in order to save image from the specified url to the server.
+   - Run DisplayPostsTask() in order to display all the posts of the users
+   - Run DisplayLatestPostTask() in order to display the last post of the user that was born in the current month
+   - Run CreateTablePostsPerHourTask() in order to create table posts_per_hour
   
   
 ![inmanage](https://github.com/yuvalBerghaus/IM/assets/65304080/3449335e-74da-4c5e-b10b-4c5f32e2c58d)
