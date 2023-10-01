@@ -41,9 +41,7 @@ Before using this application, ensure you have the following in place:
 
 3. Initialize the database:
    - Ensure your MySQL database is set up with the correct configuration.
-   - Run the following command to create the necessary tables:
-     ```bash
-     php initialize_database.php
+   - Run the tasks in index.php
      ```
 
 4. Start the application:
