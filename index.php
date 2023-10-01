@@ -6,10 +6,10 @@ require './controller/controller.php';
 Run tasks in chronological order
 */
 
+// CreateTablesAndInsertApiTask();
 // SaveImageFromURLTask();
 // DisplayPostsTask();
 // DisplayLatestPostTask();
-// Task_6();
-// Task_7();
+// CreateTablePostsPerHourTask();
 
 ?>
